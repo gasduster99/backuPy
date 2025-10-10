@@ -1,0 +1,103 @@
+<html>
+<head><title>SSH login without password</title></head>
+<link rel="stylesheet" type="text/css" href="styles.css">
+<body bgcolor=white>
+<script language="JavaScript" type="text/javascript";>
+<!--
+function setFocus()
+{
+    document.search.KEYWORD.focus();
+    document.search.KEYWORD.select();
+}
+// -->
+</script>
+<form name="search" action="search.php">
+<table style="margin-top: 5px;" border=0 cellspacing=0 cellpadding=0><tr>
+<td background="keyword.png" width=176>
+  <input onKeypress="document.search.FULLTEXT.value = ''" class=search name=KEYWORD size=11 value="">
+  <script language="javascript" type="text/javascript"> 
+    if (document.all) setFocus();
+  </script>
+</td>
+<td>&nbsp;</td>
+<td background="fulltext.png" width=199>
+  <input onKeypress="document.search.KEYWORD.value=''" class=search name=FULLTEXT size=15 value=""></td>
+<td>&nbsp;</td>
+<td><a href="keywords.html"><img border=0 src="index.png"></a></td>
+<td>&nbsp;</td>
+<td><a href="history.html"><img border=0 src="history.png"></a></td>
+<td>&nbsp;</td>
+<td><a href="authors.html"><img border=0 src="authors.png"></a></td>
+<td>&nbsp;</td>
+<td><a href="index.html"><img border=0 src="home.png"></a></td>
+</tr>
+</table>
+<input type=image src="transpix.gif" border=0 id=submit name=submit width=1 height=1>
+</form>
+<script language="javascript" type="text/javascript"> 
+setFocus(); 
+</script>
+<h1>SSH login without password</h1>
+<h2>Your aim</h2>
+<p>You want to use Linux and OpenSSH to automate your tasks. Therefore
+you need an <b>automatic</b> login from host A / user a to Host B / user b.
+You don't want to enter any passwords, because you want to call <tt>ssh</tt>
+from a within a shell script.</p>
+
+<h2>How to do it</h2>
+<p>First log in on A as user a and generate a pair of authentication keys. 
+Do not enter a passphrase:</p>
+<pre class=shell>
+a@A:~&gt; ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/a/.ssh/id_rsa): 
+Created directory '/home/a/.ssh'.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/a/.ssh/id_rsa.
+Your public key has been saved in /home/a/.ssh/id_rsa.pub.
+The key fingerprint is:
+3e:4f:05:79:3a:9f:96:7c:3b:ad:e9:58:37:bc:37:e4 a@A
+</pre>
+
+<p>Now use <tt>ssh</tt> to create a directory <tt>~/.ssh</tt> as user b on B. (The directory may already exist, which is fine):</p>
+<pre class=shell>
+a@A:~&gt; ssh b@B mkdir -p .ssh
+b@B's password: 
+</pre>
+
+<p>Finally append a's new public key to <tt>b@B:.ssh/authorized_keys</tt> and
+enter b's password one last time:</p>
+
+<pre class=shell>
+a@A:~&gt; cat .ssh/id_rsa.pub | ssh b@B 'cat &gt;&gt; .ssh/authorized_keys'
+b@B's password: 
+</pre>
+
+
+<p>From now on you can log into B as b from A as a without password:</p>
+<pre class=shell>
+a@A:~&gt; ssh b@B
+</pre>
+<p><b>A note</b> from one of our readers: 
+Depending on your version of SSH you might also have to do the
+following changes:
+<ul>
+<li>Put the public key in <tt>.ssh/authorized_keys2</tt></li>
+<li>Change the permissions of <tt>.ssh</tt> to <tt>700</tt></li>
+<li>Change the permissions of <tt>.ssh/authorized_keys2</tt> to <tt>640</tt></li>
+</ul>
+
+<p style="margin-bottom: 0px; text-align: right; color: #d00000;">
+Keywords:
+  <a style="color: #d00000" href="kw_ssh.html">ssh</a>
+  <a style="color: #d00000" href="kw_openssh.html">openssh</a>
+  <a style="color: #d00000" href="kw_password.html">password</a>
+ &nbsp; <b>Author: <a style="color: #d00000" href=auth_1.html>Mathias Kettner</a></b></p><table cellpadding=0 cellspacing=0 style="padding-top: 50px" width=785>
+  <tr><td valign=bottom></td>
+  <td valign=bottom align=right>
+    <a href="http://mathias-kettner.com/check_mk">Check_MK</a>&nbsp;
+    <a href="http://mathias-kettner.de">MK</a>
+  </td></tr>
+</table>
+</html>

@@ -1,0 +1,5 @@
+#!/usr/bin/expect -f
+set timeout 2 
+spawn ssh -o StrictHostKeyChecking=no [lindex $argv 0] hostname
+expect "*?assword:*"
+send -- "\n"
