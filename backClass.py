@@ -121,7 +121,7 @@ class backUtil():
 
         #import pdb; pdb.set_trace()
         homeDir = subprocess.check_output( f"ssh {user}@{ip} pwd", shell=True).strip()
-        os.system( f"ssh {user}@{ip} bash -l {homeDir}/Documents/programs/backupSys/start.sh & >> {self.logPoint}/{time}{User}{Host}Backup.log 2>&1" )
+        os.system( f"ssh {user}@{ip} bash -l {homeDir}/Documents/programs/backuPy/start.sh & >> {self.logPoint}/{time}{User}{Host}Backup.log 2>&1" )
         os.system('rsync -avz '
             '--exclude ".cache" '
             '--exclude ".config/teamveiwer*" '
@@ -140,7 +140,7 @@ class backUtil():
             f"{user}@{ip}:{homeDir}/ {self.backPoint}/{user}{Host}/ >> {self.logPoint}/{time}{User}{Host}Backup.log 2>&1"
         )
         print("\tStop Sync...")
-        os.system( f"ssh {user}@{ip} bash -l {homeDir}/Documents/programs/backupSys/stop.sh & >> {self.logPoint}/{time}{User}{Host}Backup.log 2>&1" )
+        os.system( f"ssh {user}@{ip} bash -l {homeDir}/Documents/programs/backuPy/stop.sh & >> {self.logPoint}/{time}{User}{Host}Backup.log 2>&1" )
         #
         print("\tArchive...")
         self.archive(host, time)
