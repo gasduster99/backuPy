@@ -1,5 +1,10 @@
 A python program that scans the network to progamatically perform periodic backups and archives of registered Unix machines on the LAN. 
 
+To install clone this repo in ~/Documents/programs/
+	
+	cd ~/Documents/programs/
+	git clone git@github.com:gasduster99/backuPy.git
+
 You will need to put your hostname and username in the client.list file.
 
 You will also need to set up passwordless ssh from the backup server to the various clients. 
