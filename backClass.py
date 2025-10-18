@@ -46,7 +46,7 @@ class backUtil():
         time = cal.timegm( tm.gmtime() )
         #
         os.system('clear')
-        for name in self.hostUsers:
+        for name in self.hostUsers: #sorted(self.hostUsers):
                 #
                 print(f"{name}:")
                 ls = self.lsBackup(name)
