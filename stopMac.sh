@@ -1,14 +1,11 @@
 #!/bin/bash
 
-##Linux
 #export DISPLAY=:1 
-#Mac
+#export DISPLAY=/private/tmp/com.apple.launchd.KAxnDWCQtJ/org.xquartz:0
 foundDisplay=$(ls -t /private/tmp/com.apple.launchd.*/org.xquartz:0 | head -1)
 export DISPLAY=$foundDisplay
 
-##Linux
-#nohup vlc -I dummy -q ~/Documents/programs/backuPy/downTone.mp3 &
-#Mac
+#
 afplay ~/Documents/programs/backuPy/downTone.mp3
 
 #
