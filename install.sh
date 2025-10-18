@@ -34,11 +34,11 @@ install_system_deps() {
         "debian")
             echo "Installing system dependencies for Debian/Ubuntu..."
             sudo apt-get update
-            sudo apt-get install -y expect xcowsay
+            sudo apt-get install -y expect xcowsay pigz
             ;;
         "redhat")
             echo "Installing system dependencies for RedHat/Fedora/CentOS..."
-            sudo yum install -y expect xcowsay
+            sudo yum install -y expect xcowsay pigz
             ;;
         "macos")
             echo "Installing system dependencies for macOS via Homebrew..."
@@ -46,7 +46,7 @@ install_system_deps() {
                 echo "Homebrew not found. Please install Homebrew to continue (https://brew.sh/)."
                 exit 1
             fi
-            brew install expect xquartz autoconf gettext gdk-pixbuf gtk+ xcowsay 
+            brew install expect pigz xquartz autoconf gettext gdk-pixbuf gtk+ xcowsay 
 	    	#git clone https://github.com/nickg/xcowsay.git
 		#cd xcowsay
 		#./configure
