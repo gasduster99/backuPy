@@ -46,7 +46,7 @@ class backUtil():
         time = cal.timegm( tm.gmtime() )
         #
         os.system('clear')
-        for name in self.hostUsers:
+        for name in self.hostUsers: #sorted(self.hostUsers):
                 #
                 print(f"{name}:")
                 ls = self.lsBackup(name)
@@ -120,7 +120,7 @@ class backUtil():
         print( "\tStart Sync..." )
 
         #import pdb; pdb.set_trace()
-        homeDir = subprocess.check_output( f"ssh {user}@{ip} pwd", shell=True).strip()
+        homeDir = subprocess.check_output( f"ssh {user}@{ip} pwd", shell=True).decode('utf-8').strip()
         os.system( f"ssh {user}@{ip} bash -l {homeDir}/Documents/programs/backuPy/start.sh & >> {self.logPoint}/{time}{User}{Host}Backup.log 2>&1" )
         os.system('rsync -avz '
             '--exclude ".cache" '
@@ -158,7 +158,8 @@ class backUtil():
         #together enough solutions here to maybe make the program automagically figure its shit out here.
         
         #os.system('zip -r %s%d%s%sBackup %s%s%s >> %s%d%s%sBackup.log 2>&1' % (mp, time, user.capitalize(), host.capitalize(), bp, user.lower(), host.capitalize(), lp, time, user.capitalize(), host.capitalize()))
-        os.system('tar -I pigz -cf {self.mountPoint}/{time}{User}{Host}Backup.tar.gz {self.backPoint}{user}{Host} >> {self.logPoint}/{time}{User}{Host}Backup.log 2>&1')
+        #import pdb; pdb.set_trace()
+        os.system(f"tar -I pigz -cf {self.mountPoint}/{time}{User}{Host}Backup.tar.gz {self.backPoint}/{user}{Host} >> {self.logPoint}/{time}{User}{Host}Backup.log 2>&1")
         #os.system('tar --use-compress-program="pigz -k -p 1" -cf %s%d%s%sBackup.tar.gz %s%s%s >> %s%d%s%sBackup.log 2>&1' % (mp, time, user.capitalize(), host.capitalize(), bp, user.lower(), host.capitalize(), lp, time, user.capitalize(), host.capitalize()))
         #https://unix.stackexchange.com/questions/57719/how-do-i-resume-a-tar-command-which-was-killed
     #
