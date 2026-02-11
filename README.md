@@ -7,8 +7,11 @@ To install, clone this repo in ~/Documents/programs/ on each machine backed up.
 
 You will need to put your hostname and username in the client.list file.
 
-As well as set up passwordless ssh from the backup server to the various clients. 
-http://www.linuxproblem.org/art_9.html
+As well as set up passwordless ssh from the backup server to the various clients (http://www.linuxproblem.org/art_9.html). 
+To avoid known_hosts errors over time you will need to add the following to ~/.ssh/config on the backup server.
+
+	Host 192.168.1.*
+    		StrictHostKeyChecking accept-new
 
 In the preamble of backMain.py you will need to describe where backups will reside as well as describe the subnet to scan (e.g. 192.168.1) at the time of initalizing the backup class.
 
